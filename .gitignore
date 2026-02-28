@@ -1,0 +1,33 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Coverage and test artifacts
+.coverage
+.coverage.*
+htmlcov/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Local environment files
+.env
+.env.*
+!.env.example

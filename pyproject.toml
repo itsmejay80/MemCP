@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memcp"
+version = "0.1.0"
+description = "Private, local-first memory MCP server"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "MemCP" }]
+license = { text = "MIT" }
+dependencies = [
+  "fastmcp>=2.12.0",
+  "qdrant-client>=1.11.0",
+  "sentence-transformers>=3.0.0",
+  "rank-bm25>=0.2.2",
+  "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "ruff>=0.6.0",
+]
+
+[project.scripts]
+memcp = "memcp.cli:main"
+
+[tool.setuptools]
+packages = ["memcp"]
