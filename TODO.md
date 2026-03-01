@@ -8,9 +8,9 @@ Last updated: 2026-03-01
 - [x] Add `MIN_SCORE` to config/env/docs
 
 ## Next Sprint (Highest Impact)
-- [ ] Add `compact=true` response mode for `search_memory` (token-efficient payload)
-- [ ] Add `include_explain=true` for score breakdown (`dense`, `bm25`, `final`)
-- [ ] Add write-time dedupe in `add_memory` (skip/merge policy + threshold)
+- [x] Add `compact=true` response mode for `search_memory` (token-efficient payload)
+- [x] Add `include_explain=true` for score breakdown (`dense`, `bm25`, `final`)
+- [x] Add write-time dedupe in `add_memory` (skip/merge policy + threshold)
 
 ## Ingestion Improvements
 - [ ] Replace sentence split with configurable chunking (size + overlap)
@@ -47,4 +47,3 @@ Last updated: 2026-03-01
 - [ ] Add importance/pinning support
 - [ ] Add project/namespace isolation
 - [ ] Add recency decay tuning profile
-

@@ -10,8 +10,8 @@ This MVP is built entirely with open-source/free tools:
 
 ## Features in MVP
 
-- `add_memory`
-- `search_memory` (hybrid dense + BM25, with `top_k` + `min_score`)
+- `add_memory` (write-time dedupe with score bands and `dedupe_policy=auto|skip|merge`)
+- `search_memory` (hybrid dense + BM25, with `top_k`, `min_score`, `compact`, `include_explain`)
 - `list_memories`
 - `delete_memory`
 - `clear_memories`
@@ -72,6 +72,9 @@ Every tool call must include `auth_token` matching `MEMCP_AUTH_TOKEN`.
 - `ATOMIC_EXTRACT`: `true`/`false` local sentence-based extraction (default `true`)
 - `TOP_K`: default search result count (default `10`)
 - `MIN_SCORE`: default minimum score filter for search results (default `0.2`)
+- `DEDUPE_THRESHOLD`: legacy alias for skip threshold (default `0.92`)
+- `DEDUPE_SKIP_THRESHOLD`: dedupe enter threshold (default `0.92`)
+- `DEDUPE_MERGE_THRESHOLD`: auto-merge threshold (default `0.97`)
 - `MEMCP_AUTH_TOKEN`: if set, all MCP tools require matching `auth_token`
 - `MEMCP_REQUIRE_AUTH`: force auth mode even without auto-detection (`true`/`false`)
 
@@ -79,3 +82,12 @@ Every tool call must include `auth_token` matching `MEMCP_AUTH_TOKEN`.
 
 - Atomic fact extraction in this MVP is fully local and rule-based (sentence splitting).
 - Hosted/cloud LLM extraction can be added later as an optional mode.
+- Dedupe policy is score-banded by default:
+  - `score < DEDUPE_SKIP_THRESHOLD`: insert new
+  - `DEDUPE_SKIP_THRESHOLD <= score < DEDUPE_MERGE_THRESHOLD`: borderline band
+    - `dedupe_policy=auto` (default): insert new + mark `possible_duplicate_of`
+    - `dedupe_policy=skip`: skip insert
+    - `dedupe_policy=merge`: merge into existing
+  - `score >= DEDUPE_MERGE_THRESHOLD`: high-confidence band
+    - `dedupe_policy=auto|merge`: merge into existing
+    - `dedupe_policy=skip`: skip insert

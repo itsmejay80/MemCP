@@ -23,6 +23,11 @@ class AddMemoryInput:
     tags: list[str] = field(default_factory=list)
     user_id: str | None = None
     source: str = "mcp"
+    dedupe: bool = True
+    dedupe_policy: str = "auto"
+    dedupe_threshold: float | None = None
+    dedupe_skip_threshold: float | None = None
+    dedupe_merge_threshold: float | None = None
 
 
 @dataclass(slots=True)
@@ -32,6 +37,8 @@ class SearchMemoryInput:
     min_score: float | None = 0.2
     tags: list[str] = field(default_factory=list)
     user_id: str | None = None
+    compact: bool = False
+    include_explain: bool = False
 
 
 @dataclass(slots=True)

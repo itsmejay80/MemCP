@@ -34,11 +34,26 @@ def add_memory(
     tags: list[str] | None = None,
     user_id: str | None = None,
     source: str = "mcp",
+    dedupe: bool = True,
+    dedupe_policy: str = "auto",
+    dedupe_threshold: float | None = None,
+    dedupe_skip_threshold: float | None = None,
+    dedupe_merge_threshold: float | None = None,
     auth_token: str | None = None,
 ) -> dict:
     """Store a memory in local-first vector storage."""
     _require_auth(auth_token)
-    return _get_engine().add_memory(content=content, tags=tags, user_id=user_id, source=source)
+    return _get_engine().add_memory(
+        content=content,
+        tags=tags,
+        user_id=user_id,
+        source=source,
+        dedupe=dedupe,
+        dedupe_policy=dedupe_policy,
+        dedupe_threshold=dedupe_threshold,
+        dedupe_skip_threshold=dedupe_skip_threshold,
+        dedupe_merge_threshold=dedupe_merge_threshold,
+    )
 
 
 @mcp.tool()
@@ -48,6 +63,8 @@ def search_memory(
     min_score: float | None = 0.2,
     tags: list[str] | None = None,
     user_id: str | None = None,
+    compact: bool = False,
+    include_explain: bool = False,
     auth_token: str | None = None,
 ) -> list[dict]:
     """Search memories with hybrid dense + BM25 ranking."""
@@ -58,6 +75,8 @@ def search_memory(
         min_score=min_score,
         tags=tags,
         user_id=user_id,
+        compact=compact,
+        include_explain=include_explain,
     )
 
 
