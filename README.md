@@ -11,7 +11,7 @@ This MVP is built entirely with open-source/free tools:
 ## Features in MVP
 
 - `add_memory`
-- `search_memory` (hybrid dense + BM25)
+- `search_memory` (hybrid dense + BM25, with `top_k` + `min_score`)
 - `list_memories`
 - `delete_memory`
 - `clear_memories`
@@ -71,6 +71,7 @@ Every tool call must include `auth_token` matching `MEMCP_AUTH_TOKEN`.
 - `EMBEDDING_MODEL`: sentence-transformers model id
 - `ATOMIC_EXTRACT`: `true`/`false` local sentence-based extraction (default `true`)
 - `TOP_K`: default search result count (default `10`)
+- `MIN_SCORE`: default minimum score filter for search results (default `0.2`)
 - `MEMCP_AUTH_TOKEN`: if set, all MCP tools require matching `auth_token`
 - `MEMCP_REQUIRE_AUTH`: force auth mode even without auto-detection (`true`/`false`)
 

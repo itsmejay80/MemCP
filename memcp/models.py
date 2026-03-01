@@ -29,6 +29,7 @@ class AddMemoryInput:
 class SearchMemoryInput:
     query: str
     top_k: int = 10
+    min_score: float | None = 0.2
     tags: list[str] = field(default_factory=list)
     user_id: str | None = None
 

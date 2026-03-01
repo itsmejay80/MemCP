@@ -45,13 +45,20 @@ def add_memory(
 def search_memory(
     query: str,
     top_k: int = 10,
+    min_score: float | None = 0.2,
     tags: list[str] | None = None,
     user_id: str | None = None,
     auth_token: str | None = None,
 ) -> list[dict]:
     """Search memories with hybrid dense + BM25 ranking."""
     _require_auth(auth_token)
-    return _get_engine().search_memory(query=query, top_k=top_k, tags=tags, user_id=user_id)
+    return _get_engine().search_memory(
+        query=query,
+        top_k=top_k,
+        min_score=min_score,
+        tags=tags,
+        user_id=user_id,
+    )
 
 
 @mcp.tool()

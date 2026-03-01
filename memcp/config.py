@@ -17,6 +17,7 @@ class Settings:
     collection_name: str = os.getenv("QDRANT_COLLECTION", "memories")
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
     top_k: int = int(os.getenv("TOP_K", "10"))
+    min_score: float = float(os.getenv("MIN_SCORE", "0.2"))
     enable_atomic_extract: bool = os.getenv("ATOMIC_EXTRACT", "true").lower() == "true"
     auth_token: str | None = os.getenv("MEMCP_AUTH_TOKEN")
     require_auth: bool = os.getenv("MEMCP_REQUIRE_AUTH", "false").lower() == "true" or bool(

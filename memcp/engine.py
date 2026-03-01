@@ -42,12 +42,14 @@ class MemoryEngine:
         self,
         query: str,
         top_k: int | None = None,
+        min_score: float | None = None,
         tags: list[str] | None = None,
         user_id: str | None = None,
     ) -> list[dict[str, Any]]:
         search = SearchMemoryInput(
             query=query,
             top_k=top_k or settings.top_k,
+            min_score=settings.min_score if min_score is None else min_score,
             tags=tags or [],
             user_id=user_id,
         )
@@ -67,6 +69,8 @@ class MemoryEngine:
             dense_candidates=dense_candidates,
             full_candidates=full_candidates,
         )
+        if search.min_score is not None:
+            combined = [item for item in combined if item["score"] >= search.min_score]
         return combined[: search.top_k]
 
     def list_memories(
@@ -137,10 +141,10 @@ class MemoryEngine:
             raw_scores = bm25.get_scores(q_tokens)
             if len(raw_scores) > 0:
                 max_score = max(raw_scores)
-                min_score = min(raw_scores)
-                span = max(max_score - min_score, 1e-9)
+                min_bm25 = min(raw_scores)
+                span = max(max_score - min_bm25, 1e-9)
                 for idx, score in enumerate(raw_scores):
-                    bm25_scores[corpus_ids[idx]] = (score - min_score) / span
+                    bm25_scores[corpus_ids[idx]] = (score - min_bm25) / span
 
         # Weighted combination favors semantic relevance while preserving keyword precision.
         hybrid: list[tuple[str, float]] = []
